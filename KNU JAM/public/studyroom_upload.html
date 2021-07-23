@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNU JAM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">KNU JAM</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              </li>
+              
+          &nbsp;
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Incorrect answer rate
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="알고리즘 오답률.html">알고리즘 실습</a></li>
+                <li><a class="dropdown-item" href="자료구조 오답률.html">자료구조</a></li>
+            </ul>
+          </div>
+              <!-- <li class="nav-item4">
+                <a class="nav-link" href="login.html">Login</a>
+              </li> -->
+              <li class="nav-item5">
+                <a class="nav-link" href="register.html">Register</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    
+    <!-- <div class="container mt-3">
+        <div class="product">
+          <div class="thumbnail" style="background-image: url('https://via.placeholder.com/350')"></div>
+          <div class="flex-grow-1 p-4">
+            <h5 class="title">아기다스 신발</h5>
+            <p class="date">2030년 1월 8일</p>
+            <p class="price">20000원</p>
+            <p class="float-end">🤍0</p>
+          </div>
+    </div>
+    </div> -->
+    <div class="container mt-3">
+        <input type="text" class="form-control mt-2" id="title" placeholder="title" autocomplete="off">
+        <textarea class="form-control mt-2" id="content" placeholder="content" autocomplete="off"></textarea>
+        <input type="text" class="form-control mt-2" id="person" placeholder="person limit" autocomplete="off">
+        <button class="btn btn-danger mt-3" id="send">생성</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyABJkt7uGrInlxQ0fRaG9wraI6qbRCf2nQ",
+            authDomain: "test3-a34b5.firebaseapp.com",
+            projectId: "test3-a34b5",
+            storageBucket: "test3-a34b5.appspot.com",
+            messagingSenderId: "388069458005",
+            appId: "1:388069458005:web:9c9a45e9459adf7bf0d4dc"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <!-- <script>
+        const db = firebase.firestore();
+        $('#send').click(function () {
+            var 저장할거 = {
+                제목: $('#title').val(),
+                인원: $('#person').val(),
+                내용: $('#content').val(),
+                날짜: new Date()
+                
+            }
+            db.collection('room').add(저장할거).then((result) => {
+                window.location.href = './studyroom.html'
+            }).catch((error) => {
+                consloe.log(err)
+
+            })
+        });
+    </script> -->
+    
+    <script>
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+   firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        // var uid = user.uid;
+        //alert("로그인중")
+        $(".nav-item5").before("<li class='nav-item4'><a class='nav-link' onclick = 'logout_func()'>Logout</a></li>");
+        $('#send').click(function () {
+            var 저장할거 = {
+                제목: $('#title').val(),
+                인원: $('#person').val(),
+                내용: $('#content').val(),
+                날짜: new Date()
+                
+            }
+            db.collection('room').add(저장할거).then((result) => {
+                window.location.href = './studyroom.html'
+            }).catch((error) => {
+                consloe.log(err)
+
+            })
+        });
+        // ...
+    } else {
+        //alert("로그인x")
+        $(".nav-item5").before("<li class='nav-item4'><a class='nav-link' href='./login.html'>Login</a></li>");
+        // User is signed out
+        // ...
+    }
+});
+
+function logout_func() {
+    firebase.auth().signOut();
+    window.location.href = './index.html'
+}
+
+function check() {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            // var uid = user.uid;
+            alert("로그인중")
+            console.log(firebase.auth().currentUser)
+            // ...
+        } else {
+            alert("로그인x")
+            // User is signed out
+            // ...
+        }
+    });
+}
+
+</script>
+</body>
+
+
+</html>
